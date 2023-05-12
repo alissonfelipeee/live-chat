@@ -4,6 +4,8 @@ const urlSearch = new URLSearchParams(window.location.search);
 const username = urlSearch.get("username");
 const room = urlSearch.get("select_room");
 
+document.title = `Chat - ${room}`;
+
 const usernameDiv = document.getElementById("username");
 usernameDiv.innerHTML = `Olá <strong>${username}</strong> - Você está na sala <strong>${room}</strong>`;
 
@@ -57,31 +59,28 @@ socket.on("message", (data) => {
 function createMessage(data) {
   const messageDiv = document.getElementById("messages");
 
-  if (data.username === username) {
-    messageDiv.innerHTML += `
-    <li class="flex justify-end">
+  const ownerMessage =
+    data.username === username ? "justify-end" : "justify-start";
+
+  const backgroundMessage = data.username === username ? "bg-gray-100" : "";
+
+  messageDiv.innerHTML += `
+    <li class="flex ${ownerMessage}">
     <div
-    class="relative max-w-xl px-4 py-2 text-gray-700 bg-gray-100 rounded shadow"
+    class="relative max-w-xl px-4 py-2 text-gray-700 rounded shadow ${backgroundMessage}"
   >
-        <strong>${data.username}</strong> <span>${data.message} - ${dayjs(
-      data.createdAt
-    ).format("DD/MM HH:mm")}</span>
+        <strong>${data.username}</strong> <span class="text-xs">${dayjs(
+    data.createdAt
+  ).format("HH:mm")}</span>
+    <p>${data.message}</p>
     </div>
       </li>
     `;
-  } else {
-    messageDiv.innerHTML += `
-    <li class="flex justify-start">
-    <div
-    class="relative max-w-xl px-4 py-2 text-gray-700 rounded shadow"
-  >
-        <strong>${data.username}</strong> <span>${data.message} - ${dayjs(
-      data.createdAt
-    ).format("DD/MM HH:mm")}</span>
-    </div>
-      </li>
-    `;
-  }
+
+  messageDiv.scrollIntoView({
+    block: "end",
+    behavior: "smooth",
+  });
 }
 
 document.getElementById("logout").addEventListener("click", (event) => {
