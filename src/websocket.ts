@@ -6,10 +6,19 @@ interface RoomUser {
   room: string;
 }
 
+interface Message {
+  room: string;
+  username: string;
+  message: string;
+  createdAt: Date;
+}
+
 const users: RoomUser[] = [];
 
+const messages: Message[] = [];
+
 io.on("connection", (socket) => {
-  socket.on("select_room", (data) => {
+  socket.on("select_room", (data, callback) => {
     socket.join(data.room);
 
     const userInRoom = users.find(
@@ -25,5 +34,27 @@ io.on("connection", (socket) => {
         room: data.room,
       });
     }
+
+    const messagesRoom = getMessagesRoom(data.room);
+    callback(messagesRoom);
+  });
+
+  socket.on("message", (data) => {
+    const message: Message = {
+      room: data.room,
+      username: data.username,
+      message: data.message,
+      createdAt: new Date(),
+    };
+
+    messages.push(message);
+
+    io.to(data.room).emit("message", message);
   });
 });
+
+function getMessagesRoom(room: string) {
+  const roomMessages = messages.filter((message) => message.room === room);
+
+  return roomMessages;
+}
