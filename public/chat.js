@@ -63,7 +63,7 @@ function createMessage(data) {
     <div
     class="relative max-w-xl px-4 py-2 text-gray-700 bg-gray-100 rounded shadow"
   >
-        <strong>${data.username}</strong> <span>${data.text} - ${dayjs(
+        <strong>${data.username}</strong> <span>${data.message} - ${dayjs(
       data.createdAt
     ).format("DD/MM HH:mm")}</span>
     </div>
@@ -75,7 +75,7 @@ function createMessage(data) {
     <div
     class="relative max-w-xl px-4 py-2 text-gray-700 rounded shadow"
   >
-        <strong>${data.username}</strong> <span>${data.text} - ${dayjs(
+        <strong>${data.username}</strong> <span>${data.message} - ${dayjs(
       data.createdAt
     ).format("DD/MM HH:mm")}</span>
     </div>
