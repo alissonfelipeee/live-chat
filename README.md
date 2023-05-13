@@ -14,6 +14,13 @@ Este projeto tem como finalidade desenvolver uma aplicação de chat em tempo re
 + Com a construção desse projeto, entendi o conceito de WebSocket, aprendi a como implementar utilizando a biblioteca Socket.IO
 
 
+## Screenshots
+
+![index](https://media.discordapp.net/attachments/753576544819085382/1106932416620273724/index.png)
+
+![chat](https://media.discordapp.net/attachments/753576544819085382/1106932426095218808/chat.png?width=956&height=433)
+
+
 ## Rodando localmente
 
 Clone o projeto
